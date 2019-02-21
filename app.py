@@ -4,10 +4,6 @@ from flask_restful import Api, Resource, reqparse
 app = Flask(__name__)
 api = Api(app)
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
 users = [
     {
         "name" : "Sandesh",
@@ -75,7 +71,7 @@ class User(Resource):
 
         user = {
             "name" : name,
-            "age" : args["age"]
+            "age" : args["age"],
             "occupation" : args["occupation"]
         }
         users.append(user)
@@ -88,6 +84,5 @@ class User(Resource):
         global users
         users = [user for user in users if user["name"] != name]
         return "{} is deleted".format(name), 200
-
-if __name__ == '__main__':
-    app.run()
+api.add_resource(User, "/user/<string:name>")
+app.run(debug = True)
