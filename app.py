@@ -82,6 +82,12 @@ class User(Resource):
         return user, 201
 
     def delete(self, name):
+        """
+        Delete method is used to delete user that is no longer relevant
+        """
+        global users
+        users = [user for user in users if user["name"] != name]
+        return "{} is deleted".format(name), 200
 
 if __name__ == '__main__':
     app.run()
